@@ -6,6 +6,7 @@ public class Thrower : MonoBehaviour
 {
     public SceneController scene;
     public GameObject mineralprefab;
+    public GameObject mycanvas;
     public float speed = 0.1f;
     private float cdirection;
     public bool spawnstart = false;
@@ -21,6 +22,11 @@ public class Thrower : MonoBehaviour
         InvokeRepeating("insmineral", 1f, 1f);
     }
 
+    public void Awake()
+    {
+        mycanvas = GameObject.FindGameObjectWithTag("UI");
+        scene = mycanvas.GetComponent<SceneController>();
+    }
     // Update is called once per frame
     void Update()
     {

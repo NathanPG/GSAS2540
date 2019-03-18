@@ -11,11 +11,18 @@ public class SceneController : MonoBehaviour
     public bool isGameend = false;
     public Text scoredisplay;
     public Text lifedisplay;
-    public AudioSource bgm;
+    public GameObject regularui;
     public GameObject SCV;
     public GameObject CC;
+    public GameObject pauseemenu;
+    public GameObject mainmenu;
+    public GameObject smsgobject;
+    public GameObject fmsgobject;
+    public GameObject wmsgobject;
+    public GameObject EndMenu;
     public int score = 0;
     public int life = 3;
+
     public void addscore()
     {
         score += 10;
@@ -36,69 +43,111 @@ public class SceneController : MonoBehaviour
         lifedisplay.text = string.Format("life:{0,4}/3", life);
     }
 
-   
-
-    /*
-    private void Awake()
+    //click start button
+    public void GameStart()
     {
-        scoredisplay = GameObject.FindGameObjectWithTag("score").GetComponent<Text>();
-        lifedisplay = GameObject.FindGameObjectWithTag("lives").GetComponent<Text>();
-        SCV = GameObject.FindGameObjectWithTag("SCV");
-        CC = GameObject.FindGameObjectWithTag("CC");
-        //bgm = GameObject.FindGameObjectWithTag("BGM").GetComponent<AudioSource>();
-    }
-    */
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        //bgm.Play();
-        isGameStart = false;
+        isFirstScene = true;
+        SceneManager.LoadScene("PlayingScene");
+        regularui.SetActive(true);
+        mainmenu.SetActive(false);
         score = 0;
         life = 3;
         updatescore();
         updatelife();
-        SCV.transform.position = new Vector3(960f, 950f, -10f);
-        CC.transform.position = new Vector3(982f, 164f, -10f);
+    }
+    //click quit button
+    public void GameQuit()
+    {
+        Application.Quit();
+    }
+
+    //click high score button
+    public void DisplayHighScore()
+    {
+
+    }
+
+    //click pause button
+    public void PauseMenu()
+    {
+
+    }
+    //click restart button
+    public void Restart()
+    {
+        EndMenu.SetActive(false);
+        fmsgobject.SetActive(false);
+        wmsgobject.SetActive(false);
+        smsgobject.SetActive(true);
+        regularui.SetActive(true);
+        SceneManager.LoadScene("PlayingScene");
+        //SCV = GameObject.FindGameObjectWithTag("SCV");
+        //CC = GameObject.FindGameObjectWithTag("CC");
+        //SCV.transform.position = new Vector3(960f, 950f, -10f);
+        //CC.transform.position = new Vector3(982f, 164f, -10f);
+        score = 0;
+        life = 3;
+        updatescore();
+        updatelife();
+        isFirstScene = true;
+    }
+    //click menu button
+    public void BacktoMenu()
+    {
+        SceneManager.LoadScene("TempMenu");
+        EndMenu.SetActive(false);
+        fmsgobject.SetActive(false);
+        wmsgobject.SetActive(false);
+        mainmenu.SetActive(true);
+        regularui.SetActive(false);
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        EndMenu.SetActive(false);
+        pauseemenu.SetActive(false);
+        regularui.SetActive(false);
+        fmsgobject.SetActive(false);
+        wmsgobject.SetActive(false);
+        smsgobject.SetActive(false);
+        isGameStart = false;
+        isFirstScene = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         //win
-        if (score == 100 && isGameStart)
+        if ((score == 100 | life == 0) && isGameStart)
         {
-            SceneManager.LoadScene("WinScene");
-            isGameStart = false;
-        }
-        //gg
-        else if (life == 0 && isGameStart)
-        {
-            SceneManager.LoadScene("GGScene");
+            if(score == 100)
+            {
+                wmsgobject.SetActive(true);
+            }else if(life == 0)
+            {
+                fmsgobject.SetActive(true);
+            }
+            EndMenu.SetActive(true);
+            regularui.SetActive(false);
+            SceneManager.LoadScene("EndScene");
             isGameStart = false;
         }
         //first start
-        else if (Input.GetMouseButton(0) && isFirstScene)
+        else if (isFirstScene)
         {
-            SceneManager.LoadScene("PlayingScene");
-            isFirstScene = false;
-            isGameStart = true;
-        }
-        //restart
-        else if (!isGameStart)
-        {
+            smsgobject.SetActive(true);
+            fmsgobject.SetActive(false);
+            wmsgobject.SetActive(false);
             if (Input.GetMouseButton(0))
             {
+                SCV = GameObject.FindGameObjectWithTag("SCV");
+                CC = GameObject.FindGameObjectWithTag("CC");
                 SCV.transform.position = new Vector3(960f, 950f, -10f);
                 CC.transform.position = new Vector3(982f, 164f, -10f);
-                score = 0;
-                life = 3;
-                updatescore();
-                updatelife();
-                isFirstScene = true;
-
-                SceneManager.LoadScene("StartScene");
+                isGameStart = true;
+                isFirstScene = false;
+                smsgobject.SetActive(false);
             }
         }
     }

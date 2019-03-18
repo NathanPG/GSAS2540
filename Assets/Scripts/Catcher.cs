@@ -6,6 +6,13 @@ public class Catcher : MonoBehaviour
 {
     public float speed = 0.1f;
     public SceneController scene;
+    public GameObject mycanvas;
+
+    public void Awake()
+    {
+        mycanvas = GameObject.FindGameObjectWithTag("UI");
+        scene = mycanvas.GetComponent<SceneController>();
+    }
 
     // Update is called once per frame
     void Update()
