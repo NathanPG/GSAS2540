@@ -70,7 +70,14 @@ public class SceneController : MonoBehaviour
     //click pause button
     public void PauseMenu()
     {
-
+        Time.timeScale = 0;
+        pauseemenu.SetActive(true);
+    }
+    //click cross button
+    public void resumegame()
+    {
+        Time.timeScale = 1;
+        pauseemenu.SetActive(false);
     }
     //click restart button
     public void Restart()
@@ -81,10 +88,6 @@ public class SceneController : MonoBehaviour
         smsgobject.SetActive(true);
         regularui.SetActive(true);
         SceneManager.LoadScene("PlayingScene");
-        //SCV = GameObject.FindGameObjectWithTag("SCV");
-        //CC = GameObject.FindGameObjectWithTag("CC");
-        //SCV.transform.position = new Vector3(960f, 950f, -10f);
-        //CC.transform.position = new Vector3(982f, 164f, -10f);
         score = 0;
         life = 3;
         updatescore();
