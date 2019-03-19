@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
+/// <summary>
+/// This script is to control scores
+/// </summary>
 public class ScoreController : MonoBehaviour
 {
     public Text HighScoreText;
 
+    //Update playerpref of score
     public void UpdateScore(int currentscore)
     {
         string tempstring = "";
@@ -35,6 +38,7 @@ public class ScoreController : MonoBehaviour
 
     }
 
+    //Update the score text object
     public void DisplayScore()
     {
         string tempstring = "";

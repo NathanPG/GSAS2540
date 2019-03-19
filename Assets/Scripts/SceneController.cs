@@ -4,8 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// This script controls scenes, including buttons, 
+/// menus, messages, switching scenes.
+/// </summary>
+
 public class SceneController : MonoBehaviour
 {
+    public ScoreController scoreController;
     public bool isGameStart = false;
     public bool isFirstScene = true;
     public bool isGameend = false;
@@ -20,24 +26,29 @@ public class SceneController : MonoBehaviour
     public GameObject fmsgobject;
     public GameObject wmsgobject;
     public GameObject EndMenu;
+    public GameObject HSmenu;
     public int score = 0;
     public int life = 3;
 
+    //Add score by 10
     public void addscore()
     {
         score += 10;
     }
 
+    //Lose one life
     public void loselife()
     {
         life -= 1;
     }
 
+    //Update the score text obejct
     public void updatescore()
     {
-        scoredisplay.text = string.Format("scores:{0,4}/100", score);
+        scoredisplay.text = string.Format("scores:{0,4}/200", score);
     }
 
+    //Update the life text object
     public void updatelife()
     {
         lifedisplay.text = string.Format("life:{0,4}/3", life);
@@ -64,7 +75,15 @@ public class SceneController : MonoBehaviour
     //click high score button
     public void DisplayHighScore()
     {
+        scoreController.UpdateScore(score);
+        scoreController.DisplayScore();
+        HSmenu.SetActive(true);
+    }
 
+    //click cross button in highscore menu
+    public void closeHS()
+    {
+        HSmenu.SetActive(false);
     }
 
     //click pause button
@@ -73,13 +92,15 @@ public class SceneController : MonoBehaviour
         Time.timeScale = 0;
         pauseemenu.SetActive(true);
     }
-    //click cross button
+
+    //click cross button in pause menu
     public void resumegame()
     {
         Time.timeScale = 1;
         pauseemenu.SetActive(false);
     }
-    //click restart button
+
+    //click restart button in the last scene
     public void Restart()
     {
         EndMenu.SetActive(false);
@@ -94,10 +115,12 @@ public class SceneController : MonoBehaviour
         updatelife();
         isFirstScene = true;
     }
-    //click menu button
+
+    //click menu button in the last scene
     public void BacktoMenu()
     {
         SceneManager.LoadScene("TempMenu");
+        HSmenu.SetActive(false);
         EndMenu.SetActive(false);
         fmsgobject.SetActive(false);
         wmsgobject.SetActive(false);
@@ -109,6 +132,7 @@ public class SceneController : MonoBehaviour
     void Start()
     {
         EndMenu.SetActive(false);
+        HSmenu.SetActive(false);
         pauseemenu.SetActive(false);
         regularui.SetActive(false);
         fmsgobject.SetActive(false);
@@ -122,15 +146,18 @@ public class SceneController : MonoBehaviour
     void Update()
     {
         //win
-        if ((score == 100 | life == 0) && isGameStart)
+        if ((score == 200 | life == 0) && isGameStart)
         {
-            if(score == 100)
+            if(score == 200)
             {
                 wmsgobject.SetActive(true);
             }else if(life == 0)
             {
                 fmsgobject.SetActive(true);
             }
+            scoreController.UpdateScore(score);
+            scoreController.DisplayScore();
+            HSmenu.SetActive(true);
             EndMenu.SetActive(true);
             regularui.SetActive(false);
             SceneManager.LoadScene("EndScene");

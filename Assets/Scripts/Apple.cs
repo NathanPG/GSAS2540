@@ -6,14 +6,12 @@ public class Apple : MonoBehaviour
 {
     public AudioSource MissSound;
     public AudioSource CaughtSound;
-    //public AudioController AudioController;
     public SceneController scene;
 
     void Start()
     {
         MissSound = GameObject.FindGameObjectWithTag("miss").GetComponent<AudioSource>();
         CaughtSound = GameObject.FindGameObjectWithTag("caught").GetComponent<AudioSource>();
-        //AudioController = GameObject.FindGameObjectWithTag("UI").GetComponent<AudioController>();
         scene = GameObject.FindGameObjectWithTag("UI").GetComponent<SceneController>();
     }
 

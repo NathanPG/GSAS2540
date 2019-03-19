@@ -13,12 +13,14 @@ public class AudioController : MonoBehaviour
     public Toggle mutemusic;
     public Toggle mutesfx;
 
+    //music slider
     public void AdjustMusic()
     {
         music.volume = MusicSlider.value;
         PlayerPrefs.SetFloat("music", MusicSlider.value);
     }
 
+    //sfx slider
     public void AdjustSFX()
     {
         miss.volume = SfxSlider.value;
@@ -26,6 +28,7 @@ public class AudioController : MonoBehaviour
         PlayerPrefs.SetFloat("sfx", SfxSlider.value);
     }
 
+    //mute music button
     public void MuteMusic()
     {
         if (mutemusic.isOn)
@@ -40,6 +43,7 @@ public class AudioController : MonoBehaviour
         }
     }
 
+    //mute sfx button
     public void MuteSFX()
     {
         if (mutesfx.isOn) {
@@ -89,13 +93,12 @@ public class AudioController : MonoBehaviour
         //music on or off
         if (!PlayerPrefs.HasKey("isMusicOn"))
         {
-            music.Play();
             PlayerPrefs.SetInt("isMusicOn", 1);
         }
         else
         {
             if (PlayerPrefs.GetInt("isMusicOn")==1){
-                music.Play();
+                
                 mutemusic.isOn = false;
             }
             else

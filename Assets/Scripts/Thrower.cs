@@ -7,7 +7,7 @@ public class Thrower : MonoBehaviour
     public SceneController scene;
     public GameObject mineralprefab;
     public GameObject mycanvas;
-    public float speed = 0.1f;
+    public float speed = 0.15f;
     private float cdirection;
     public bool spawnstart = false;
 
@@ -27,7 +27,7 @@ public class Thrower : MonoBehaviour
         mycanvas = GameObject.FindGameObjectWithTag("UI");
         scene = mycanvas.GetComponent<SceneController>();
     }
-    // Update is called once per frame
+
     void Update()
     {
         if (scene.isGameStart)
